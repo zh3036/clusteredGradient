@@ -8,7 +8,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 
 
-mnist = input_data.read_data_sets("/home/zihanz/cluterML/clusteredGradient/inputdata", one_hot=True)
+mnist = input_data.read_data_sets("/home/zihanz2/cluterML/clusteredGradient/inputdata", one_hot=True)
 
 
 class clusterdTrain(object):
@@ -151,9 +151,9 @@ def deepGrad(Train,R=6000,B=20):
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     #sess = tf.InteractiveSession()
     sess = tf.Session()
-    #tf.global_variables_initializer().run()
-    tf.initialize_all_variables().run(session=sess)
-    tf.initialize_local_variables().run(session=sess)
+    tf.global_variables_initializer().run(session=sess)
+    #tf.initialize_all_variables().run(session=sess)
+    #tf.initialize_local_variables().run(session=sess)
     
     loss = 10 
     acc = 0
@@ -171,7 +171,7 @@ def deepGrad(Train,R=6000,B=20):
             acc_list.append(test_accuracy)
             loss_list.append(train_loss)
             
-        train_step.run(feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+        train_step.run(session=sess,feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
 
     print("test accuracy %g"%accuracy.eval(session=sess,feed_dict={
             x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0}))    
@@ -183,10 +183,12 @@ def deepGrad(Train,R=6000,B=20):
 
 
 
-images = np.load("minstImages.npy")
-lables = np.load("minstLabels.npy")
+#images = np.load("minstImages.npy")
+images = mnist.train.images
+labels = mnist.train.labels
+#lables = np.load("minstLabels.npy")
 final_ind = np.load("final_ind_cluster.npy")
-final_labels  = lables[final_ind]
+final_labels  = labels[final_ind]
 final_images = images[final_ind]
 clusteredData = clusterdTrain(final_images,final_labels)
 
