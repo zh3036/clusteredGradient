@@ -8,7 +8,7 @@ from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 
 
-mnist = input_data.read_data_sets("/home/zihanz2/cluterML/clusteredGradient/inputdata", one_hot=True)
+mnist = input_data.read_data_sets("/home/zihanz/cluterML/clusteredGradient/inputdata", one_hot=True)
 
 
 class clusterdTrain(object):
